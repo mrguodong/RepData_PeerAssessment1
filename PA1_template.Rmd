@@ -7,7 +7,7 @@ output:
 
 ```{r global_options}
 library(knitr)
-opts_chunk$set(fig.path='figures/')
+opts_chunk$set(fig.path='figures/',echo=TRUE)
 ```
 ```{r}
 ## Loading and preprocessing the data

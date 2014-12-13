@@ -3,7 +3,7 @@
 
 ```r
 library(knitr)
-opts_chunk$set(fig.path='figures/')
+opts_chunk$set(fig.path='figures/',echo=TRUE)
 ```
 
 ```r
