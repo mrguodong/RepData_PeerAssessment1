@@ -1,15 +1,12 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
-```{r global_options}
+
+```r
 library(knitr)
 opts_chunk$set(fig.path='figures/')
 ```
-```{r}
+
+```r
 ## Loading and preprocessing the data
 library(data.table)
 library(ggplot2)
@@ -26,34 +23,49 @@ s_d <- dt[, sum(steps,na.rm=TRUE),by = date]
 ggplot(s_d,aes(x=s_d$date,y=V1))+ geom_bar(stat='identity',aes_string(x=NULL)) + xlab("Date") + 
         ylab("Steps(Sum)") +
         scale_x_date()
-        
+```
+
+![](figures/unnamed-chunk-1-1.png) 
+
+```r
 ## What is the average daily activity pattern?
 mn <- mean(s_d$V1,na.rm=TRUE)
 md <- median(s_d$V1,na.rm=TRUE)
 ```
 
-mean/median by date `r mn` and `r md`. 
+mean/median by date 9354.2295082 and 10395. 
 
 ## the average daily activity pattern
-```{r}
+
+```r
 mn_i <- dt[, mean(steps,na.rm=TRUE),by = interval]
 setnames(mn_i,"V1","Average_Steps")
 plot(mn_i$interval,mn_i$Average_Steps,type="l",xlab="Interval",ylab="Average Steps")
 ```
 
+![](figures/unnamed-chunk-2-1.png) 
+
 ## 5-minute interval with the maximum number of steps
-```{r}
+
+```r
 mn_i[which.max(mn_i$Average_Steps),]
+```
+
+```
+##    interval Average_Steps
+## 1:      835      206.1698
 ```
 
 
 ## Imputing missing values
-```{r}
+
+```r
 totalNA <- nrow(dt[is.na(dt[,steps]),])
 ```
-## the total number of rows with NAs is `r totalNA`
+## the total number of rows with NAs is 2304
 
-```{r}
+
+```r
 getNAMean <- function(idate,steps){
         if(!is.na(steps)){
                 return (steps)
@@ -84,13 +96,19 @@ ggplot(s_d2,aes(x=s_d2$date,y=V1)) + geom_bar(stat='identity') +
          xlab("Date") + 
         ylab("Steps(Sum)") +
         scale_x_date()
+```
+
+![](figures/unnamed-chunk-5-1.png) 
+
+```r
 mn2 <- mean(s_d2$V1,na.rm=TRUE)
 md2 <- median(s_d2$V1,na.rm=TRUE)
 ```
-## mean/median by date after imputing miss values:  `r mn2` and `r md2`. 
+## mean/median by date after imputing miss values:  1.0766189\times 10^{4} and 1.0766189\times 10^{4}. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
+
+```r
 #Create a new factor variable in the dataset with two levels -- "weekday" 
 #and "weekend" indicating whether a given date is a weekday or weekend day.
 getWeekday <- function(idate){
@@ -107,5 +125,6 @@ setnames(mn_dt3,"V1","Average_Steps")
 ggplot(mn_dt3,aes(interval,Average_Steps)) + geom_line()+ facet_grid(Days ~ .) +
         xlab("Interval") +
         ylab("Average Steps")
-
 ```
+
+![](figures/unnamed-chunk-6-1.png) 
