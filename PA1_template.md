@@ -90,10 +90,9 @@ dt2$steps <- mapply(getNAMeanIterval,dt2$interval,dt2$steps)
 #   What is the impact of imputing missing data on the estimates of the total daily 
 #   number of steps?
 dt2 <- data.table(dt2)
-dt2$date <- as.Date(dt2$date)
+#dt2$date <- as.Date(dt2$date)
 s_d2 <- dt2[, sum(steps,na.rm=TRUE),by = date]
-ggplot(s_d2,aes(x=s_d2$date,y=V1)) + geom_bar(stat='identity') +
-         xlab("Date") + 
+ggplot(s_d2,aes(x=as.Date(s_d2$date),y=V1)) + geom_bar(stat='identity')+ xlab("Date") + 
         ylab("Steps(Sum)") +
         scale_x_date()
 ```
@@ -103,6 +102,20 @@ ggplot(s_d2,aes(x=s_d2$date,y=V1)) + geom_bar(stat='identity') +
 ```r
 mn2 <- mean(s_d2$V1,na.rm=TRUE)
 md2 <- median(s_d2$V1,na.rm=TRUE)
+
+mn2
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+md2
+```
+
+```
+## [1] 10766.19
 ```
 ## mean/median by date after imputing miss values:  1.0766189\times 10^{4} and 1.0766189\times 10^{4}. 
 

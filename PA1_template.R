@@ -33,7 +33,7 @@ md <- median(s_d$V1,na.rm=TRUE)
 mn_i <- dt[, mean(steps,na.rm=TRUE),by = interval]
 setnames(mn_i,"V1","Average_Steps")
 plot(mn_i$interval,mn_i$Average_Steps,type="l")
-colnames(mn_i) <- c("Interval","Average Steps")
+colnames(mn_i) <- c("Interval","Average_Steps")
 head(mn_i)
 
 # Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -60,7 +60,7 @@ getNAMeanIterval <- function(inInterval,steps){
         if(!is.na(steps)){
                 return (steps)
         }else{
-                return (mn_i[interval==inInterval,V1])        
+                return (mn_i[Interval==inInterval,Average_Steps])        
         }        
 }
 
@@ -83,6 +83,7 @@ ggplot(s_d2,aes(x=s_d2$date,y=V1)) + geom_bar(stat='identity')+ xlab("Date") +
         scale_x_date()
 mn2 <- mean(s_d2$V1,na.rm=TRUE)
 md2 <- median(s_d2$V1,na.rm=TRUE)
+
 
 #Create a new factor variable in the dataset with two levels -- "weekday" 
 #and "weekend" indicating whether a given date is a weekday or weekend day.
